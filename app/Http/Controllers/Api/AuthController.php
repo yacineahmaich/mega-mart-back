@@ -16,11 +16,7 @@ class AuthController extends Controller
 
     public function signup(SignupRequest $request)
     {
-        //Validated
-
         $credentials = $request->validated();
-
-
 
         $user = User::create([
             'name' => $credentials["name"],
@@ -29,14 +25,9 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-
-            'message' => "User Created Successfully",
-            'token' => $user->createToken("main")->plainTextToken,
+            'token' => $user->createToken("token")->plainTextToken,
             "user" => new UserResource($user)
-        ], 200);
-
-
-
+        ], 201);
     }
 
 
@@ -47,18 +38,15 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials, $remember_me)) {
             return response()->json([
-                'status' => false,
-                'message' => 'Invalid credentials',
+                'message' => 'invalid credentials',
             ], 401);
         }
 
         /** @var User */
         $user = Auth::user();
-        $token = $user->createToken("main")->plainTextToken;
+        $token = $user->createToken("token")->plainTextToken;
 
         return response()->json([
-            'status' => true,
-            'message' => "logged in successfully as $user->email",
             'token' => $token,
             "user" => new UserResource($user)
         ], 200);
@@ -70,15 +58,13 @@ class AuthController extends Controller
         $user = $request->user();
         $user->currentAccessToken()->delete();
         
-        return response()->json(["message" => "logout"],200) ;
+        return response()->json(["success" => true],200) ;
     }
+
+
     public function me(Request $request)
     {
-        /** @var User $user */
-        $user = $request->user();
-      
-        
-        return new UserResource($user) ;
+        return new UserResource($request->user());
     }
 
 }
