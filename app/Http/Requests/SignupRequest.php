@@ -15,6 +15,12 @@ class SignupRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation() {
+        $this->merge([
+            'password_confirmation' => $this->passwordConfirmation
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,9 +29,7 @@ class SignupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
             "name" =>['required','string','min:4', 'max:50'],
-            'email' => 'required|email|unique:users,email',
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required',Password::min(6)->symbols(), 'confirmed']
         ];
