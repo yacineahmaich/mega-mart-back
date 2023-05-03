@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -53,7 +52,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        // $user = User::where('email', $request->email)->first();
+        /** @var User */
         $user = Auth::user();
         $token = $user->createToken("main")->plainTextToken;
 
