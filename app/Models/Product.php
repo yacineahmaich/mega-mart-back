@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
+use function GuzzleHttp\Promise\each;
+
 class Product extends Model
 {
     use HasFactory;
@@ -52,6 +54,28 @@ class Product extends Model
                 $query->oldest();
                 break;
         }
+    }
+
+    public function scopeFilter(Builder $query): void
+    {
+        // filter by category
+        if(request()->has('cat')) {
+            $categories = explode(',',request('cat'));
+            
+            $query->whereIn('category_id',$categories);
+        }
+
+        if(request()->has('min_price')) {
+            $query->where('price', '>=', request('min_price'));
+        }
+
+        if(request()->has('max_price')) {
+            $query->where('price', '<=', request('max_price'));
+        }
+
+        // if(request()->has('rating')) {
+        //     $query->where('rating', '<=', request('rating'));
+        // }
     }
 
     public function category() {
