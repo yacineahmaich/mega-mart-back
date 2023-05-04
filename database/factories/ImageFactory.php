@@ -17,12 +17,12 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
-        $imagespath = public_path('storage/images');
-        if(!File::exists($imagespath)){
-            File::makeDirectory($imagespath);
-        }
+        // $imagespath = public_path('storage/images');
+        // if(!File::exists($imagespath)){
+        //     File::makeDirectory($imagespath);
+        // }
         return [
-            'url' =>  $this->faker->image($imagespath,800,800, null, false) 
+            'url' =>  $this->faker->imageUrl(800,800, null, true) 
         ];
     }
 }
