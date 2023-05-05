@@ -34,4 +34,11 @@ class SignupRequest extends FormRequest
             'password' => ['required',Password::min(6)->symbols(), 'confirmed']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email.unique' => 'this email has already an account'
+        ];
+    }
 }

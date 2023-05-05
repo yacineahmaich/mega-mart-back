@@ -22,7 +22,7 @@ class ImageFactory extends Factory
         //     File::makeDirectory($imagespath);
         // }
         return [
-            'url' =>  $this->faker->imageUrl(800,800, null, true) 
+            'url' =>  $this->faker->imageUrl(800,800, null, true,null,true) 
         ];
     }
 }
