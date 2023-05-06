@@ -13,20 +13,18 @@ class CartController extends Controller
     //
     public function addToCart(Request $request, Product $product)
     {
-        if (Auth::user()) {
-            if ($product->quantity < $request->input("quantity")) {
-                return response()->json(["message" => "quantity not valid"]);
-            } else {
-                $product = $request->session()->get("products");
-                $product[$product->id] = $request->input("quantity");
-                $request->session()->put("products", $product);
-                return response()->json(["message" => "product add to cart successefuly"],201)
-                ;
-            }
-        }else {
-            return response()->json(["message" => "user no authentifier"]);
+        // if (Auth::user()) {
+        if ($product->quantity < $request->input("quantity")) {
+            return response()->json(["message" => "quantity not valid"]);
+        } else {
 
+            return response()->json(["message" => "product add to cart successefuly"], 201)
+            ;
         }
+        // } else {
+        // return response()->json(["message" => "user no authentifier"]);
+
+        // }
     }
 
 
