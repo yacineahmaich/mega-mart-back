@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected $allowedPaginationLimits = [10,15,20];
+    protected $allowedPaginationLimits = [10, 15, 20];
     /**
      * Display a listing of the resource.
      */
@@ -27,5 +27,15 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return new ProductResource($product);
+    }
+    public function VerifyQty(Request $request, Product $product)
+    {
+        if ($product->quantity < $request->input("quantity")) {
+            return response()->json(["message" => "quantity not valid"]);
+        } else {
+
+            return response()->json(["message" => "product add to cart successefuly"], 201)
+            ;
+        }
     }
 }
