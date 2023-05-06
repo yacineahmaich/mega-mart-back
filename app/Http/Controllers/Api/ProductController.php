@@ -28,14 +28,19 @@ class ProductController extends Controller
     {
         return new ProductResource($product);
     }
-    public function VerifyQty(Request $request, Product $product)
-    {
-        if ($product->quantity < $request->input("quantity")) {
-            return response()->json(["message" => "quantity not valid"]);
-        } else {
 
-            return response()->json(["message" => "product add to cart successefuly"], 201)
-            ;
+
+    public function VerifyQty($id,Request $request)
+    {
+        $product = Product::findOrFail($id);
+        
+        if ($product->quantity < $request->input("quantity")) {
+            return response()->json([
+                "success" => false,
+                 "message" => "quantity not available right now"
+                ]);
         }
+        
+        return response()->json(["success" => true]);
     }
 }

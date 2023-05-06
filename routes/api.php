@@ -32,10 +32,6 @@ Route::post('/login', [AuthController::class, 'login']);
 // Products
 Route::apiResource('products', ProductController::class);
 Route::apiResource('categories', CategoryController::class);
-Route::group(['middleware' => ['web']], function () {
-    // your routes here
-    // Route::get('cart', [CartController::class,"index"]);
-    Route::post('cart', [CartController::class,"addToCart"]);
-    // Route::delete('cart', [CartController::class,"destroy"]);
-});
+
+// Cart
 Route::post("/products/{id}/verifyQty",[ProductController::class,  "verifyQty"]);
