@@ -38,3 +38,4 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('cart', [CartController::class,"addToCart"]);
     // Route::delete('cart', [CartController::class,"destroy"]);
 });
+Route::post("/products/{id}/verifyQty",[ProductController::class,  "verifyQty"]);
