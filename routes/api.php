@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+// use App\Http\Controllers\CartController;
+use App\Http\Controllers\api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Api\ProductController;
@@ -30,3 +32,9 @@ Route::post('/login', [AuthController::class, 'login']);
 // Products
 Route::apiResource('products', ProductController::class);
 Route::apiResource('categories', CategoryController::class);
+Route::group(['middleware' => ['web']], function () {
+    // your routes here
+    // Route::get('cart', [CartController::class,"index"]);
+    Route::post('cart', [CartController::class,"addToCart"]);
+    // Route::delete('cart', [CartController::class,"destroy"]);
+});
