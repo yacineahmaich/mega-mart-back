@@ -18,6 +18,13 @@ class ProductController extends Controller
         $limit = $request->query('limit') ?? 10;
         $limit = in_array($limit, $this->allowedPaginationLimits) ? $limit : 10;
 
+        // Get products by ids
+        if($request->has('productIds')) {
+            $ids = $request->query('productIds');
+            $ids = $ids ? explode(',', $ids) : [];
+            return ProductResource::collection(Product::find($ids));
+        }
+
         return ProductResource::collection(Product::filter()->sortItems()->paginate($limit));
     }
 
