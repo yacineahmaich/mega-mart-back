@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
-    public function getProfile() {
-
+    public function getProfile(Request $request) {
+        
     }
 
     public function updateProfile(UpdateProfileRequest $request) {
