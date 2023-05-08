@@ -30,12 +30,11 @@ Route::middleware('auth:sanctum')->group(
         Route::post('/profile/edit', [AccountController::class, 'updateProfile']);
     }
 );
+
+// Auth
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Products
+// Resources
 Route::apiResource('products', ProductController::class);
 Route::apiResource('categories', CategoryController::class);
-
-// Cart
-Route::post("/products/{id}/verifyQty",[ProductController::class,  "verifyQty"]);
