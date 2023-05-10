@@ -21,6 +21,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Auth
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// Guests Routes
+Route::apiResource('products', ProductController::class);
+Route::apiResource('categories', CategoryController::class);
+
+// Client Routes
 Route::middleware('auth:sanctum')->group(
     function () {
         Route::get('/me', [AuthController::class, 'me']);
@@ -31,10 +40,11 @@ Route::middleware('auth:sanctum')->group(
     }
 );
 
-// Auth
-Route::post('/signup', [AuthController::class, 'signup']);
-Route::post('/login', [AuthController::class, 'login']);
-
-// Resources
-Route::apiResource('products', ProductController::class);
-Route::apiResource('categories', CategoryController::class);
+// Admin Routes
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'admin']], function() {
+    Route::get('test', function() {
+        return response([
+            'message' => 'welcome to admin group'
+        ]);
+    });
+});
