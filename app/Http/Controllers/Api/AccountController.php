@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\CustomerResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -24,12 +23,12 @@ class AccountController extends Controller
              'password' => bcrypt($data['password'])
             ]);
 
-            return new UserResource($request->user());
+            return new CustomerResource($request->user()->customer);
 
         } else {
             $request->user()->update($data);
 
-            return new UserResource($request->user());
+            return new CustomerResource($request->user()->customer);
         }
     }
 }

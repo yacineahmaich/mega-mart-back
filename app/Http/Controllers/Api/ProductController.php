@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
@@ -22,10 +23,10 @@ class ProductController extends Controller
         if($request->has('productIds')) {
             $ids = $request->query('productIds');
             $ids = $ids ? explode(',', $ids) : [];
-            return ProductResource::collection(Product::find($ids));
+            return new ProductCollection(Product::find($ids));
         }
 
-        return ProductResource::collection(Product::filter()->sortItems()->paginate($limit));
+        return new ProductCollection(Product::filter()->sortItems()->paginate($limit));
     }
 
     /**

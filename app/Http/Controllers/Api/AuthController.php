@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerResource;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,9 +25,13 @@ class AuthController extends Controller
             'password' => Hash::make($credentials["password"])
         ]);
 
+        $customer = Customer::create([
+            'user_id' => $user->id,
+        ]);
+
         return response()->json([
             'token' => $user->createToken("token")->plainTextToken,
-            "user" => new UserResource($user)
+            "profile" => new CustomerResource($customer)
         ], 201);
     }
 
@@ -48,7 +53,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            "user" => new UserResource($user)
+            "profile" => new CustomerResource($user->customer)
         ], 200);
 
     }
@@ -64,7 +69,7 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return new UserResource($request->user());
+        return new CustomerResource($request->user()->customer);
     }
 
 }
