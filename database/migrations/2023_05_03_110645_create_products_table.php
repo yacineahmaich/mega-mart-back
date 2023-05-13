@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->float('price');
             $table->integer('quantity');
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

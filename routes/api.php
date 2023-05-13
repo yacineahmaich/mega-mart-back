@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(
         Route::get('/me', [AuthController::class, 'me']);
         Route::post('/logout', [AuthController::class, 'logout']);
 
-        
+        // profile
         Route::post('/profile/edit', [AccountController::class, 'updateProfile']);
     }
 );
