@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $user->createToken("token")->plainTextToken,
-            "profile" => new CustomerResource($customer)
+            "user" => new CustomerResource($customer)
         ], 201);
     }
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            "profile" => new CustomerResource($user->customer)
+            "user" => new CustomerResource($user->customer)
         ], 200);
 
     }

@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
+    public static $wrap = null;
     /**
      * Transform the resource into an array.
      *
@@ -22,7 +23,8 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'quantity' => $this->quantity,
             'category' => new CategoryResource($this->category),
-            'images' => ImageResource::collection($this->images)
+            'images' => ImageResource::collection($this->images),
+            'reviews' => new ReviewCollection($this->reviews)
         ];
     }
 }

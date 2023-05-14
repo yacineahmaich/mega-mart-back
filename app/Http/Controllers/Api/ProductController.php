@@ -37,6 +37,10 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+    public function getProductBySlug(Product $product) {
+        return new ProductResource($product);
+    }
+
 
     public function VerifyQty($id,Request $request)
     {
