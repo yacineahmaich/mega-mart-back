@@ -27,6 +27,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Guests Routes
 Route::apiResource('products', ProductController::class);
+Route::get('/products/{product:slug}/slug', [ProductController::class, 'getProductBySlug']);
+
 Route::apiResource('categories', CategoryController::class);
 
 // Client Routes

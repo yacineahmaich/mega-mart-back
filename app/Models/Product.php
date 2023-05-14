@@ -74,7 +74,7 @@ class Product extends Model
         }
 
         // if(request()->has('rating')) {
-        //     $query->where('rating', '<=', request('rating'));
+        //     $query->whereRelation('reviews', 'rating', request('rating'));
         // }
     }
 
@@ -84,5 +84,9 @@ class Product extends Model
 
     public function images() {
         return $this->hasMany(Image::class);
+    }
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
     }
 }
