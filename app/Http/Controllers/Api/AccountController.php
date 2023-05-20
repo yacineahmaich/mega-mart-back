@@ -31,4 +31,8 @@ class AccountController extends Controller
             return new CustomerResource($request->user()->customer);
         }
     }
+
+    public function updateProfileImage(Request $request) {
+        
+    }
 }

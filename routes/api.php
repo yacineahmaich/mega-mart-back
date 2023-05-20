@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\Admin\AdminCategoryController;
+use App\Http\Controllers\Api\Admin\AdminProductController;
 use App\Http\Controllers\Api\AuthController;
-// use App\Http\Controllers\CartController;
-use App\Http\Controllers\api\CartController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Api\ProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,11 +23,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Guests Routes
-Route::apiResource('products', ProductController::class);
-Route::get('/products/{product:slug}/slug', [ProductController::class, 'getProductBySlug']);
+// Public Routes
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product:slug}', [ProductController::class, 'show']);
 
-Route::apiResource('categories', CategoryController::class);
+Route::get('/categories', [CategoryController::class, 'index']);
 
 // Client Routes
 Route::middleware('auth:sanctum')->group(
@@ -43,10 +41,9 @@ Route::middleware('auth:sanctum')->group(
 );
 
 // Admin Routes
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'admin']], function() {
-    Route::get('test', function() {
-        return response([
-            'message' => 'welcome to admin group'
-        ]);
-    });
+Route::group(['prefix' => 'admin'], function() {
+    Route::apiResources([
+        'products' => AdminProductController::class,
+        'categories' => AdminCategoryController::class
+    ]);
 });

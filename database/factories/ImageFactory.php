@@ -22,6 +22,7 @@ class ImageFactory extends Factory
         //     File::makeDirectory($imagespath);
         // }
         return [
+            'name'=> $this->faker->name(),
             'url' =>  $this->faker->imageUrl(800,800, null, true,null,true) 
         ];
     }

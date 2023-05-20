@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\Admin\CategoryCollection;
+use App\Http\Resources\Admin\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(Category::paginate());
+        return new CategoryCollection(Category::all());
     }
 
     /**
