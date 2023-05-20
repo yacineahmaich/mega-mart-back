@@ -36,23 +36,4 @@ class ProductController extends Controller
     {
         return new ProductResource($product);
     }
-
-    public function getProductBySlug(Product $product) {
-        return new ProductResource($product);
-    }
-
-
-    public function VerifyQty($id,Request $request)
-    {
-        $product = Product::findOrFail($id);
-        
-        if ($product->quantity < $request->input("quantity")) {
-            return response()->json([
-                "success" => false,
-                 "message" => "quantity not available right now"
-                ]);
-        }
-        
-        return response()->json(["success" => true]);
-    }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoryCollection extends ResourceCollection
+class ProductCollection extends ResourceCollection
 {
-    public static $wrap=null;
+    public static $wrap = 'products';
+
     /**
      * Transform the resource collection into an array.
      *

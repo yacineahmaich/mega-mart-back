@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return new CategoryCollection(Category::latest()->take(5)->get());
+        return new CategoryCollection(Category::all());
     }
 
     /**

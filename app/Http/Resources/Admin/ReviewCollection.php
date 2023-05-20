@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoryCollection extends ResourceCollection
+class ReviewCollection extends ResourceCollection
 {
-    public static $wrap=null;
     /**
      * Transform the resource collection into an array.
      *

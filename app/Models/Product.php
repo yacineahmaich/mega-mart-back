@@ -5,16 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-
-use function GuzzleHttp\Promise\each;
+use Spatie\Sluggable\hasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, hasSlug;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     protected $fillable =[
         'name',
+        'slug',
         'description',
         'price',
         'quantity',
