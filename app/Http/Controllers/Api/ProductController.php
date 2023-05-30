@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ReviewCollection;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -35,5 +37,9 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return new ProductResource($product);
+    }
+
+    public function getReviews($id) {
+        return new ReviewCollection(Review::where('product_id', $id)->get());
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Http\Resources\CustomerResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -19,17 +19,14 @@ class AccountController extends Controller
         if(isset($data['password'])) {
             $request->user()->update([
              'name' => $data['name'],
-            //  'email' => $data['email'],
+             'email' => $data['email'],
              'password' => bcrypt($data['password'])
             ]);
-
-            return new CustomerResource($request->user()->customer);
-
         } else {
             $request->user()->update($data);
-
-            return new CustomerResource($request->user()->customer);
         }
+
+        return new UserResource($request->user());
     }
 
     public function updateProfileImage(Request $request) {

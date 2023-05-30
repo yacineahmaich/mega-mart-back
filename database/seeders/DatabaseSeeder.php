@@ -15,11 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(20)->create()->each(function($user) {
-            Customer::create([
-                'user_id' => $user->id,
-            ]);
-        });
+        User::factory(20)->create();
 
         $this->call(ProductWithCategoryAndImages::class);
     }

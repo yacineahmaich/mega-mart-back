@@ -15,9 +15,13 @@ class AdminCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return new CategoryCollection(Category::all());
+    public function index(Request $request)
+    {   
+        if($request->has('page')) {
+            return new CategoryCollection(Category::paginate());
+        }else {
+            return new CategoryCollection(Category::all());
+        }
     }
 
     /**

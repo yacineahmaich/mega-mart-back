@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerResource extends JsonResource
+class UserResource extends JsonResource
 {
     public static $wrap = null;
     /**
@@ -17,8 +17,9 @@ class CustomerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->user->name,
-            'email' => $this->user->email,
+            'isAdmin' => $this->role === 'admin',
+            'name' => $this->name,
+            'email' => $this->email,
             'profileImg' => $this->profile_image
         ];
     }

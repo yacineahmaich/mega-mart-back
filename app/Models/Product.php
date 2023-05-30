@@ -22,6 +22,15 @@ class Product extends Model
             ->saveSlugsTo('slug');
     }
 
+    public  function calcAvgRating() {
+        $reviews = $this->reviews;
+        $avg_rating = count($reviews) === 0 ? 5 : collect($reviews)->reduce(function($sum,$review) {
+            return $sum + $review['rating'];
+        },0) / count($reviews);
+
+        return $avg_rating;
+    }
+
     protected $fillable =[
         'name',
         'slug',

@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\Customer;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Review;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ProductWithCategoryAndImages extends Seeder
@@ -29,7 +28,7 @@ class ProductWithCategoryAndImages extends Seeder
 
                 Review::factory(5)->create([
                     'product_id' => $product->id,
-                    'customer_id' => Customer::all()->random()->id
+                    'user_id' => User::all()->random()->id
                 ]);
 
                 Image::factory(6)->create([

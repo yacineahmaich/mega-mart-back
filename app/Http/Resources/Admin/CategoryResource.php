@@ -8,6 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
 {
+    public static $wrap = null;
     /**
      * Transform the resource into an array.
      *
@@ -20,7 +21,8 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'createdAt' => $this->created_at->format('Y M d'),
-            'products' => new ProductCollection($this->whenLoaded('products'))
+            'totalProducts' => count(collect($this->products))
+            // 'products' => new ProductCollection($this->whenLoaded('products'))
         ];
     }
 }
