@@ -7,8 +7,10 @@ use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Http\Resources\Admin\ProductResource;
 use App\Http\Resources\Admin\ProductCollection;
+use App\Http\Resources\Admin\ReviewCollection;
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 
 class AdminProductController extends Controller
@@ -61,9 +63,13 @@ class AdminProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $product->update($request->validated());
+
+        return response()->json([
+            "success" => true
+        ]);
     }
 
     /**
@@ -76,5 +82,9 @@ class AdminProductController extends Controller
         return response()->json([
             'success' => $is_deleted
         ]);
+    }
+
+    public function getReviews($id) {
+        return new ReviewCollection(Review::where('product_id', $id)->paginate());
     }
 }

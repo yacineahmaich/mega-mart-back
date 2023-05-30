@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerResource;
+use App\Http\Resources\UserResource;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,13 +26,9 @@ class AuthController extends Controller
             'password' => Hash::make($credentials["password"])
         ]);
 
-        $customer = Customer::create([
-            'user_id' => $user->id,
-        ]);
-
         return response()->json([
             'token' => $user->createToken("token")->plainTextToken,
-            "user" => new CustomerResource($customer)
+            "user" => new UserResource($user)
         ], 201);
     }
 
@@ -53,7 +50,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            "user" => new CustomerResource($user->customer)
+            "user" => new UserResource($user)
         ], 200);
 
     }
@@ -69,7 +66,7 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return new CustomerResource($request->user()->customer);
+        return new UserResource($request->user());
     }
 
 }

@@ -30,10 +30,10 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             "name" =>['required','string','min:4', 'max:50'],
-            // 'email' => [
-            //     'required', 'email',
-            //     'unique:users,email,'.$this->user()->id
-            // ],
+            'email' => [
+                'required', 'email',
+                'unique:users,email,'.$this->user()->id
+            ],
             'password' => [
                 'confirmed',
                 Password::min(6)->symbols()
@@ -41,10 +41,10 @@ class UpdateProfileRequest extends FormRequest
         ];
     }
 
-    // public function messages()
-    // {
-    //     return [
-    //         'email.unique' => 'this email has already an account'
-    //     ];
-    // }
+    public function messages()
+    {
+        return [
+            'email.unique' => 'this email has already an account'
+        ];
+    }
 }

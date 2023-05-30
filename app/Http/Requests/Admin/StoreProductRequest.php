@@ -39,15 +39,16 @@ class StoreProductRequest extends FormRequest
             'images.*' => [
                 'image',
                 'mimes:jpeg,jpg,png',
-                'max:2048',
-                'dimensions:min_width=600,min_height=600,max_width=800,max_height=800' ] //'dimensions:ratio=2/3'] 
+                //  'max:2048',
+                //  'dimensions:min_width=600,min_height=600,max_width=800,max_height=800'
+                 ]
         ];
     }
 
     public function messages() {
         return [
             'images.*.mimes' => 'unsupported image type',
-            'images.*.dimensions' => 'unsupported image dimensions',
+            // 'images.*.dimensions' => 'unsupported image dimensions',
         ];
     }
 }

@@ -22,9 +22,11 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'quantity' => $this->quantity,
+            'avgRating' => $this->calcAvgRating(),
             'category' => new CategoryResource($this->category),
             'images' => ImageResource::collection($this->images),
-            'reviews' => new ReviewCollection($this->reviews)
+            'totalReviews' => count($this->reviews)
+            // 'reviews' => new ReviewCollection($this->reviews)
         ];
     }
 }

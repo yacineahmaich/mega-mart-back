@@ -17,10 +17,6 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
-        // $imagespath = public_path('storage/images');
-        // if(!File::exists($imagespath)){
-        //     File::makeDirectory($imagespath);
-        // }
         return [
             'name'=> $this->faker->name(),
             'url' =>  $this->faker->imageUrl(800,800, null, true,null,true) 

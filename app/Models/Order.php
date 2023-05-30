@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'total',
-        'customer_id'
+        'user_id'
     ];
 
     public function items() {
@@ -19,7 +19,6 @@ class Order extends Model
     }
 
     public function customer() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
-
 }
