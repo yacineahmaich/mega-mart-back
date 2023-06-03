@@ -25,8 +25,19 @@ class User extends Authenticatable
         'profile_image'
     ];
 
-    public function reviews() {
+    public function reviews()
+    {
         return $this->hasMany(Review::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable', null, 'imageable_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 
     /**

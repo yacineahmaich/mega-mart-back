@@ -3,12 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\File;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MainCategory>
  */
-class ImageFactory extends Factory
+class MainCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,8 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'url' =>  $this->faker->imageUrl(800, 800, null, true, null, true)
+            'name' => $this->faker->word(),
+            'description' => $this->faker->paragraph()
         ];
     }
 }

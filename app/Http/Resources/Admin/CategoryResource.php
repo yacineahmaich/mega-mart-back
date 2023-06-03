@@ -21,8 +21,8 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'createdAt' => $this->created_at->format('Y M d'),
-            'totalProducts' => count(collect($this->products))
-            // 'products' => new ProductCollection($this->whenLoaded('products'))
+            'totalProducts' => count(collect($this->products)),
+            'products' => new ProductCollection($this->whenLoaded('products'))
         ];
     }
 }

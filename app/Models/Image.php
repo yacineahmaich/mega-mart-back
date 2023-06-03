@@ -15,4 +15,15 @@ class Image extends Model
         'url',
         'product_id'
     ];
+
+    protected $hidden = [
+        'imageable_type',
+        'imageable_id'
+    ];
+
+
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
 }
