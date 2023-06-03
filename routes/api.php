@@ -12,10 +12,10 @@ Route::prefix("v1")->group(function () {
     require __DIR__ . '/api/v1/client/products.php';
     require __DIR__ . '/api/v1/client/categories.php';
 
+    // admin routes
     Route::middleware(['auth:sanctum', 'admin'])
         ->prefix('admin')
         ->group(function () {
-            // admin routes
             require __DIR__ . '/api/v1/admin/products.php';
             require __DIR__ . '/api/v1/admin/categories.php';
             require __DIR__ . '/api/v1/admin/customers.php';

@@ -15,23 +15,24 @@ class Product extends Model
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
 
-    public  function calcAvgRating() {
+    public  function calcAvgRating()
+    {
         $reviews = $this->reviews;
-        $avg_rating = count($reviews) === 0 ? 5 : collect($reviews)->reduce(function($sum,$review) {
+        $avg_rating = count($reviews) === 0 ? 5 : collect($reviews)->reduce(function ($sum, $review) {
             return $sum + $review['rating'];
-        },0) / count($reviews);
+        }, 0) / count($reviews);
 
         return $avg_rating;
     }
 
-    protected $fillable =[
+    protected $fillable = [
         'name',
         'slug',
         'description',
@@ -50,11 +51,11 @@ class Product extends Model
 
     public function scopeSortItems(Builder $query): void
     {
-        if(!request()->has('sort')) return ;
-        
+        if (!request()->has('sort')) return;
+
         $sort_query = request('sort');
 
-        if(!in_array($sort_query,$this->allowedSorts)) return;
+        if (!in_array($sort_query, $this->allowedSorts)) return;
 
         switch ($sort_query) {
             case 'name':
@@ -78,17 +79,17 @@ class Product extends Model
     public function scopeFilter(Builder $query): void
     {
         // filter by category
-        if(request()->has('cat')) {
-            $categories = explode(',',request('cat'));
-            
-            $query->whereIn('category_id',$categories);
+        if (request()->has('cat')) {
+            $categories = explode(',', request('cat'));
+
+            $query->whereIn('category_id', $categories);
         }
 
-        if(request()->has('min_price')) {
+        if (request()->has('min_price')) {
             $query->where('price', '>=', request('min_price'));
         }
 
-        if(request()->has('max_price')) {
+        if (request()->has('max_price')) {
             $query->where('price', '<=', request('max_price'));
         }
 
@@ -97,15 +98,23 @@ class Product extends Model
         // }
     }
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function images() {
-        return $this->hasMany(Image::class);
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function reviews() {
+    public function reviews()
+    {
         return $this->hasMany(Review::class);
+    }
+
+    public function offer()
+    {
+        return $this->hasOne(Offer::class);
     }
 }

@@ -21,7 +21,6 @@ class ReviewResource extends JsonResource
             'at' => $this->created_at->format('Y M d'),
             'author' => new UserResource($this->author),
             'product' => new ProductResource($this->whenLoaded('product'))
-
         ];
     }
 }
