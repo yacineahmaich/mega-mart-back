@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
-use App\Http\Resources\Admin\CategoryCollection;
-use App\Http\Resources\Admin\CategoryResource;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -16,10 +16,10 @@ class AdminCategoryController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {   
-        if($request->has('page')) {
+    {
+        if ($request->has('page')) {
             return new CategoryCollection(Category::paginate());
-        }else {
+        } else {
             return new CategoryCollection(Category::all());
         }
     }
@@ -63,6 +63,5 @@ class AdminCategoryController extends Controller
         return response()->json([
             'success' => $id_deleted
         ]);
-        
     }
 }

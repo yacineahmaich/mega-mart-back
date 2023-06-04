@@ -7,9 +7,7 @@ use App\Http\Requests\SignupRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CustomerResource;
 use App\Http\Resources\UserResource;
-use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -52,15 +50,14 @@ class AuthController extends Controller
             'token' => $token,
             "user" => new UserResource($user)
         ], 200);
-
     }
     public function logout(Request $request)
     {
         /** @var User $user */
         $user = $request->user();
         $user->currentAccessToken()->delete();
-        
-        return response()->json(["success" => true],200) ;
+
+        return response()->json(["success" => true], 200);
     }
 
 
@@ -68,5 +65,4 @@ class AuthController extends Controller
     {
         return new UserResource($request->user());
     }
-
 }

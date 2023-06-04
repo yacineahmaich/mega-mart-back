@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Admin;
+namespace App\Http\Resources;
 
-use App\Http\Resources\Admin\ProductCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class CustomerResource extends JsonResource
 {
     public static $wrap = null;
     /**
@@ -19,10 +18,8 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'createdAt' => $this->created_at->format('Y M d'),
-            'totalProducts' => count(collect($this->products)),
-            'products' => new ProductCollection($this->whenLoaded('products'))
+            'email' => $this->email,
+            'profileImg' => $this->profile_image
         ];
     }
 }

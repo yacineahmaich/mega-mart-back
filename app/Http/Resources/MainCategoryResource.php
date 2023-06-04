@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Admin;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerResource extends JsonResource
+class MainCategoryResource extends JsonResource
 {
-    public static $wrap = null;
     /**
      * Transform the resource into an array.
      *
@@ -18,8 +17,7 @@ class CustomerResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email,
-            'profileImg' => $this->profile_image
+            'description' => $this->description,
         ];
     }
 }

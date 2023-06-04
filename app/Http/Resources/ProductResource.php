@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ImageCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,7 +25,7 @@ class ProductResource extends JsonResource
             'quantity' => $this->quantity,
             'avgRating' => $this->calcAvgRating(),
             'category' => new CategoryResource($this->category),
-            'images' => ImageResource::collection($this->images),
+            'images' => new ImageCollection($this->images),
             'totalReviews' => count($this->reviews)
             // 'reviews' => new ReviewCollection($this->reviews)
         ];
