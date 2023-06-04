@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
-use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewCollection;
+use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -22,7 +22,7 @@ class ProductController extends Controller
         $limit = in_array($limit, $this->allowedPaginationLimits) ? $limit : 10;
 
         // Get products by ids
-        if($request->has('productIds')) {
+        if ($request->has('productIds')) {
             $ids = $request->query('productIds');
             $ids = $ids ? explode(',', $ids) : [];
             return new ProductCollection(Product::find($ids));
@@ -39,7 +39,8 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    public function getReviews($id) {
+    public function getReviews($id)
+    {
         return new ReviewCollection(Review::where('product_id', $id)->get());
     }
 }

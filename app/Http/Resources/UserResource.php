@@ -17,7 +17,7 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'isAdmin' => $this->role === 'admin',
+            'isAdmin' => $this->when($this->isAdmin(), true),
             'name' => $this->name,
             'email' => $this->email,
             'profileImg' => $this->profile_image

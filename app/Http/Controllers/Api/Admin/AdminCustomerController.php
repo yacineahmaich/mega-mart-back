@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\CustomerCollection;
+use App\Http\Resources\CustomerCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 

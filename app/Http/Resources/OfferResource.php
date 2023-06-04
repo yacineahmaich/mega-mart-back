@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class OfferResource extends ResourceCollection
+class OfferResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -18,7 +18,7 @@ class OfferResource extends ResourceCollection
             'id' => $this->id,
             'start' => $this->offer_start,
             'end' => $this->offer_end,
-            'backdrop' => $this->image
+            'backdrop' => new ImageResource($this->image)
         ];
     }
 }
