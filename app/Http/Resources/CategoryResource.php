@@ -18,8 +18,11 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'description' => $this->description,
             'totalProducts' => count(collect($this->products)),
+            'image' => new ImageResource($this->image),
+            'parentCategory' => $this->mainCategory
             // 'products' => new ProductCollection($this->whenLoaded('products'))
         ];
     }

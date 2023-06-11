@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class MainCategoryCollection extends ResourceCollection
 {
 
-    static $wrap = null;
+    static $wrap = 'mainCategories';
     /**
      * Transform the resource collection into an array.
      *

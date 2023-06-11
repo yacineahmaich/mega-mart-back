@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'isAdmin' => $this->when($this->isAdmin(), true),
             'name' => $this->name,
             'email' => $this->email,
-            'profileImg' => $this->profile_image
+            'avatar' => new ImageResource($this->avatar)
         ];
     }
 }
