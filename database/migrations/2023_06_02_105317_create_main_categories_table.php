@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('main_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->timestamps();
         });
@@ -24,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropColumns('main_categories', 'slug');
         Schema::dropIfExists('main_categories');
     }
 };

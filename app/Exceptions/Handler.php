@@ -33,14 +33,14 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if ($request->is('api/*')) {
-            if ($e instanceof ModelNotFoundException) {
-                return response()->json([
-                    'message' => 'Record not found.'
-                ], 404);
-            }
-            
-        }
+        // if ($request->is('api/*')) {
+        //     if ($e instanceof ModelNotFoundException) {
+        //         return response()->json([
+        //             'message' => 'Record not found.'
+        //         ], 404);
+        //     }
+
+        // }
         return parent::render($request, $e);
     }
 }

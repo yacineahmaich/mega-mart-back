@@ -8,7 +8,9 @@ use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminCategoryController extends Controller
 {
@@ -29,7 +31,27 @@ class AdminCategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $category = Category::create($request->validated());
+        $category = DB::transaction(function () use ($request) {
+
+
+            $data = $request->except(['image']);
+            $image = $request->validated('image');
+
+            $category = Category::create($data);
+
+            $imageName = time() . '_' . $image->getClientOriginalName();
+
+            $url = $image->store('images/categories', 'public');
+
+            $category->image()->save(
+                Image::create([
+                    'name' => $imageName,
+                    'url' => url('storage/' . $url),
+                ])
+            );
+
+            return $category;
+        });
 
         return new CategoryResource($category);
     }
@@ -47,11 +69,31 @@ class AdminCategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $is_updated = $category->update($request->validated());
+        $category = DB::transaction(function () use ($request, $category) {
+            $data = $request->safe()->except(['image']);
+            $image = $request->validated('image');
 
-        return response()->json([
-            'success' => $is_updated
-        ]);
+            $updatedCategory = tap($category)->update($data);
+
+            if (!empty($image)) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+
+                $url = $image->store('images/categories', 'public');
+
+                $updatedCategory->image()->delete();
+
+                $updatedCategory->image()->save(
+                    Image::create([
+                        'name' => $imageName,
+                        'url' => url('storage/' . $url),
+                    ])
+                );
+            }
+
+            return $updatedCategory;
+        });
+
+        return new CategoryResource($category);
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Resources\ReviewCollection;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Review;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminProductController extends Controller
@@ -38,11 +39,12 @@ class AdminProductController extends Controller
 
                 $url = $image->store('images/products', 'public');
 
-                Image::create([
-                    'name' => $imageName,
-                    'url' => url('storage/' . $url),
-                    'product_id' => $product->id
-                ]);
+                $product->images()->save(
+                    Image::create([
+                        'name' => $imageName,
+                        'url' => url('storage/' . $url),
+                    ])
+                );
             }
 
             return $product;
@@ -65,11 +67,32 @@ class AdminProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->validated());
+        $data = $request->validated();
 
-        return response()->json([
-            "success" => true
-        ]);
+        $updated_product = DB::transaction(function () use ($data, $product, $request) {
+
+            $product = tap($product)->update($data);
+
+            if ($request->has('images') && !empty($data['images'])) {
+                foreach ($data['images'] as $image) {
+
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+
+                    $url = $image->store('images/products', 'public');
+
+                    $product->images()->save(
+                        Image::create([
+                            'name' => $imageName,
+                            'url' => url('storage/' . $url),
+                        ])
+                    );
+                }
+            }
+
+            return $product;
+        });
+
+        return new ProductResource($updated_product);
     }
 
     /**
@@ -87,5 +110,21 @@ class AdminProductController extends Controller
     public function getReviews($id)
     {
         return new ReviewCollection(Review::where('product_id', $id)->paginate());
+    }
+
+    public function deleteImage(Product $product, Image $image)
+    {
+        $images_count = $product->images()->count();
+
+        if ($images_count === 1) return response()->json([
+            "message" => 'cannot delete all product image (a thumbnail image is required)'
+        ], 402);
+
+
+        $image->delete();
+
+        return response()->json([
+            "success" => true
+        ]);
     }
 }

@@ -16,8 +16,10 @@ class MainCategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->word();
         return [
-            'name' => $this->faker->word(),
+            'name' => $name,
+            'slug' => str()->slug($name),
             'description' => $this->faker->paragraph()
         ];
     }

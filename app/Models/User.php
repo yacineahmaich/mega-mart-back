@@ -12,17 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'role',
         'name',
         'email',
         'password',
-        'profile_image'
     ];
 
     public function reviews()
@@ -30,7 +24,7 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function image()
+    public function avatar()
     {
         return $this->morphOne(Image::class, 'imageable', null, 'imageable_id');
     }
@@ -40,21 +34,11 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

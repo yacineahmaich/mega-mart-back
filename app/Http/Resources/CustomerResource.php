@@ -19,7 +19,8 @@ class CustomerResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'profileImg' => $this->profile_image
+            'avatar' => new ImageResource($this->avatar),
+            'createdAt' => $this->created_at->format('Y M d')
         ];
     }
 }
