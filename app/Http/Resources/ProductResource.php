@@ -23,13 +23,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'quantity' => $this->quantity,
-            'discount' => $this
-                ->whenLoaded(
-                    'discount',
-                    function () {
-                        return new DiscountResource($this->discount);
-                    }
-                ),
+            'discount' => new DiscountResource($this->discount),
             'avgRating' => $this->calcAvgRating(),
             'category' => new CategoryResource($this->category),
             'images' => new ImageCollection($this->images),

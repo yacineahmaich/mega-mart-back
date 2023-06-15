@@ -13,7 +13,7 @@ class AdminDiscountController extends Controller
     public function index()
     {
 
-        return new DiscountCollection(Discount::with('product')->paginate());
+        return new DiscountCollection(Discount::paginate());
     }
 
     public function apply(StoreDiscountRequest $request)

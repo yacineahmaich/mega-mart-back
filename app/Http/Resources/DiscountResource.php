@@ -22,13 +22,7 @@ class DiscountResource extends JsonResource
             'percentage' => $this->percentage,
             'price' =>
             $this->product->price - ($this->product->price * $this->percentage / 100),
-            'product' => $this
-                ->whenLoaded(
-                    'product',
-                    function () {
-                        return new ProductResource($this->product);
-                    }
-                ),
+            'product' => $this->whenLoaded('product', $this->product)
         ];
     }
 }
