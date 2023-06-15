@@ -5,10 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class OfferCollection extends ResourceCollection
+class DiscountCollection extends ResourceCollection
 {
-
-    static $wrap = 'offers';
+    static $wrap = 'discounts';
     /**
      * Transform the resource collection into an array.
      *

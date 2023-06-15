@@ -25,15 +25,14 @@ class UpdateCategoryRequest extends FormRequest
             'name' => ['required', 'string', 'min:4', 'max:200'],
             'description' => ['nullable', 'string', "max:500"],
             'main_category_id' => ['required', 'exists:main_categories,id'],
-            'image' => ['image', 'mimes:jpeg,jpg,png'],
+            'image' => ['image'],
         ];
     }
 
     public function messages()
     {
         return [
-            'image.mimes' => 'bad image provided! please read the notes below',
-            'image.image' => 'image must be a valid image'
+            'image' => 'image not a valid image !'
         ];
     }
 }

@@ -19,8 +19,7 @@ class ImageFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'url' => 'https://placeimg.com/640/480' . '?id=' . $this->faker->uuid()
-            // 'url' =>  $this->faker->imageUrl(800, 800, null, true, null, true)
+            'url' =>  $this->faker->imageUrl(800, 800, null, true, null)
         ];
     }
 }

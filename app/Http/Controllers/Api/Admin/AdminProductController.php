@@ -21,7 +21,7 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        return new ProductCollection(Product::paginate());
+        return new ProductCollection(Product::with('discount')->paginate());
     }
 
     /**

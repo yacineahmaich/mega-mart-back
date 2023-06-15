@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,8 @@ class OfferResource extends JsonResource
             'id' => $this->id,
             'start' => $this->offer_start,
             'end' => $this->offer_end,
-            'backdrop' => new ImageResource($this->image)
+            'backdrop' => new ImageResource($this->image),
+            'product' => new ProductResource($this->product)
         ];
     }
 }

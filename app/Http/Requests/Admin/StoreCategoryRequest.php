@@ -24,15 +24,14 @@ class StoreCategoryRequest extends FormRequest
             'name' => ['required', 'string', 'min:4', 'max:200', 'unique:categories'],
             'description' => ['nullable', 'string', "max:500"],
             'main_category_id' => ['required',  "exists:main_categories,id"],
-            'image' => ['required', 'image', 'mimes:jpeg,jpg,png'],
+            'image' => ['required', 'image'],
         ];
     }
 
     public function messages()
     {
         return [
-            'image.mimes' => 'bad image provided! please read the notes below',
-            'image.image' => 'image must be a valid image'
+            'image' => 'image not a valid image !'
         ];
     }
 }
