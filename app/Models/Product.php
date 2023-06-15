@@ -121,4 +121,9 @@ class Product extends Model
     {
         return $this->hasOne(Offer::class);
     }
+
+    public function discount()
+    {
+        return $this->hasOne(Discount::class);
+    }
 }
