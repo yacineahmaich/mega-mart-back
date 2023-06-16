@@ -8,6 +8,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OfferResource extends JsonResource
 {
+    static $wrap = null;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -20,7 +22,7 @@ class OfferResource extends JsonResource
             'start' => $this->offer_start,
             'end' => $this->offer_end,
             'backdrop' => new ImageResource($this->image),
-            'product' => new ProductResource($this->product)
+            'product' => $this->whenLoaded('product', $this->product)
         ];
     }
 }
