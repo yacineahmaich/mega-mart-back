@@ -16,7 +16,13 @@ class Item extends Model
         'order_id',
     ];
 
-    public function order() {
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 }

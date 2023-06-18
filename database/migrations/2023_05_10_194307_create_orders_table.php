@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->enum('status', ['paid', 'unpaid']);
-            $table->float('total_price');
+            $table->uuid('id')->primary();
+            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->$table->float('total_price');
             $table->string('checkout_session_id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

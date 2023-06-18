@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PlaceOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
-    public function placeOrder(Request $request)
+    public function placeOrder(PlaceOrderRequest $request)
     {
         try {
             Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
+            $cart = $request->validated('cart');
+            $delivery = $request->validated('delivery');
+
+
             // 1) get cart products
-            $cart = $request->all();
             $items_ids = array_keys($cart);
             $products = Product::with('discount')->find($items_ids);
 
@@ -54,14 +59,19 @@ class CheckoutController extends Controller
 
 
             DB::transaction(function ()
-            use ($request, $total_price, $session, $cart, $products) {
+            use ($request, $total_price, $session, $cart, $products, $delivery) {
                 // 4) create new order
                 $order = new Order();
 
                 $order->user_id = $request->user()->id;
-                $order->status = 'unpaid';
                 $order->total_price = $total_price;
                 $order->checkout_session_id = $session->id;
+
+                $order->shipping_address = $delivery['shippingAddress'];
+                $order->email = $delivery['email'];
+                $order->name = $delivery['name'];
+                $order->phone = $delivery['phone'];
+                $order->note = $delivery['note'];
                 $order->save();
 
 
@@ -105,6 +115,7 @@ class CheckoutController extends Controller
 
             if ($order->status === 'unpaid') {
                 $order->status = 'paid';
+                $order->paid_at = Carbon::now();
                 $order->save();
             }
             return new OrderResource($order);
