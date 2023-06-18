@@ -29,7 +29,7 @@ class UpdateDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_end' => ["required", 'date', 'after_or_equal:now'],
+            'end' => ["required", 'date', 'after:now'],
             'percentage' => ["required", 'integer', 'min:1', 'max:100'],
         ];
     }

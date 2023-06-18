@@ -20,15 +20,15 @@ class OrderResource extends JsonResource
             'status' => $this->status,
             'totalPrice' => $this->total_price,
             'customer' => $this->whenLoaded('user', new UserResource($this->customer)),
-            "delevery" => [
+            "delivery" => [
                 'shippingAddress' => $this->shipping_address,
                 'email' => $this->email,
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'note' => $this->note,
-                'status' => $this->delevery_status,
             ],
-
+            'delivered' => $this->delivered,
+            'date' => $this->created_at->format('Y m d'),
             'items' => new ItemCollection($this->items),
         ];
     }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
-            $table->$table->float('total_price');
+            $table->float('total_price');
             $table->string('checkout_session_id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

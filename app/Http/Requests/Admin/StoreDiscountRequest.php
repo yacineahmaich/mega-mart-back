@@ -17,8 +17,6 @@ class StoreDiscountRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'discount_start' => $this->start,
-            'discount_end' => $this->end,
             'product_id' => $this->product
         ]);
     }
@@ -31,8 +29,7 @@ class StoreDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_start' => ['required', 'date', 'after_or_equal:now'],
-            'discount_end' => ["required", 'date', 'after_or_equal:discount_start'],
+            'end' => ["required", 'date', 'after_or_equal:tomorrow'],
             'percentage' => ["required", 'integer', 'min:1', 'max:100'],
             'product_id' => ["required", 'exists:products,id'],
         ];

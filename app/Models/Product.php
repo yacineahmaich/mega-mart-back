@@ -40,9 +40,9 @@ class Product extends Model
         return $price;
     }
 
-    public function hasDiscout(): bool
+    public function hasDiscout()
     {
-        return $this->discount !== null && $this->discount->discount_start < Carbon::now();
+        return $this->discount !== null && $this->discount->end > Carbon::now();
     }
 
     public function getPriceAttribute()

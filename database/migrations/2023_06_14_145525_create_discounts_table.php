@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('discount_start');
-            $table->dateTime('discount_end');
+            $table->dateTime('start')->useCurrent();
+            $table->dateTime('end');
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->integer('percentage');
             $table->timestamps();
