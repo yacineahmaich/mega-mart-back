@@ -26,7 +26,7 @@ class PlaceOrderRequest extends FormRequest
             'delivery' => ['required'],
             'delivery.email' => ['required', 'email'],
             'delivery.name' => ['required', 'string'],
-            'delivery.phone' => ['required', 'numeric', 'digits:10'],
+            'delivery.phone' => ['required', 'numeric', 'regex:/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/'],
             'delivery.note' => ['required'],
             'delivery.shippingAddress' => ['required'],
         ];

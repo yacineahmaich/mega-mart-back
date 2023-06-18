@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // $delivred_at = $this->delivered_at;
         return [
             'id' => $this->id,
             'status' => $this->status,
@@ -28,9 +29,11 @@ class OrderResource extends JsonResource
                 'note' => $this->note,
             ],
             'delivered' => $this->delivered,
-            'deliveredAt' => $this->whenNotNull($this->delivered_at->format('Y-m-d H:i:s')),
+            'deliveredAt' => $this->whenNotNull($this->delivered_at?->format('Y-m-d H:i:s')),
+            'paidAt' => $this->whenNotNull($this->paid_at?->format('Y-m-d H:i:s')),
             'date' => $this->created_at->format('Y-m-d'),
             'items' => new ItemCollection($this->items),
+            'session' => $this->checkout_session_id
         ];
     }
 }
