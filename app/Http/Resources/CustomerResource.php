@@ -20,6 +20,7 @@ class CustomerResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'avatar' => new ImageResource($this->avatar),
+            'orders' => new OrderCollection($this->orders),
             'createdAt' => $this->created_at->format('Y M d')
         ];
     }
