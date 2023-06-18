@@ -29,6 +29,11 @@ class User extends Authenticatable
         return $this->morphOne(Image::class, 'imageable', null, 'imageable_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';

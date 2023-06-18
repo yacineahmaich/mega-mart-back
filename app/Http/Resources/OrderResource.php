@@ -19,7 +19,16 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'status' => $this->status,
             'totalPrice' => $this->total_price,
-            'customer' => new UserResource($this->customer),
+            'customer' => $this->whenLoaded('user', new UserResource($this->customer)),
+            "delevery" => [
+                'shippingAddress' => $this->shipping_address,
+                'email' => $this->email,
+                'name' => $this->name,
+                'phone' => $this->phone,
+                'note' => $this->note,
+                'status' => $this->delevery_status,
+            ],
+
             'items' => new ItemCollection($this->items),
         ];
     }
