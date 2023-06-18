@@ -28,5 +28,6 @@ Route::prefix("v1")->group(function () {
             require __DIR__ . '/api/v1/admin/customers.php';
             require __DIR__ . '/api/v1/admin/offers.php';
             require __DIR__ . '/api/v1/admin/discounts.php';
+            require __DIR__ . '/api/v1/admin/orders.php';
         });
 });
