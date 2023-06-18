@@ -10,6 +10,11 @@ class Order extends Model
 {
     use HasFactory, Uuids;
 
+    protected $casts = [
+        'delivered_at' => 'datetime',
+        'paid_at' => 'datetime',
+    ];
+
     protected $fillable = [
         'status',
         'total_price',
@@ -19,7 +24,11 @@ class Order extends Model
         'phone',
         'shipping_address',
         'note',
-        'user_id'
+        'user_id',
+        'status',
+        'delivered',
+        'delivered_at',
+        'paid_at'
     ];
 
     public function items()

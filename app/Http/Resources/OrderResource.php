@@ -19,7 +19,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'status' => $this->status,
             'totalPrice' => $this->total_price,
-            'customer' => $this->whenLoaded('user', new UserResource($this->customer)),
+            'customer' =>  new UserResource($this->customer),
             "delivery" => [
                 'shippingAddress' => $this->shipping_address,
                 'email' => $this->email,
@@ -28,7 +28,8 @@ class OrderResource extends JsonResource
                 'note' => $this->note,
             ],
             'delivered' => $this->delivered,
-            'date' => $this->created_at->format('Y m d'),
+            'deliveredAt' => $this->whenNotNull($this->delivered_at->format('Y-m-d H:i:s')),
+            'date' => $this->created_at->format('Y-m-d'),
             'items' => new ItemCollection($this->items),
         ];
     }
