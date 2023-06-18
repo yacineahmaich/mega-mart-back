@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('note');
             $table->boolean('delivered')->default(false);
+            $table->dateTime('delivered_at')->nullable();
             $table->dateTime('paid_at')->nullable();
         });
     }

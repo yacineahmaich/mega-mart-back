@@ -61,29 +61,29 @@ class CheckoutController extends Controller
             DB::transaction(function ()
             use ($request, $total_price, $session, $cart, $products, $delivery) {
                 // 4) create new order
-                $order = new Order();
+                $order = Order::create([
+                    'user_id' => $request->user()->id,
+                    'total_price' => $total_price,
+                    'checkout_session_id' => $session->id,
+                    'shipping_address' => $delivery['shippingAddress'],
+                    'email' => $delivery['email'],
+                    'name' => $delivery['name'],
+                    'phone' => $delivery['phone'],
+                    'note' => $delivery['note']
+                ]);
 
-                $order->user_id = $request->user()->id;
-                $order->total_price = $total_price;
-                $order->checkout_session_id = $session->id;
-
-                $order->shipping_address = $delivery['shippingAddress'];
-                $order->email = $delivery['email'];
-                $order->name = $delivery['name'];
-                $order->phone = $delivery['phone'];
-                $order->note = $delivery['note'];
-                $order->save();
 
 
                 // 5) create order items
                 foreach ($products as $product) {
-                    $item = new Item();
-                    $item->price = $product->price;
-                    $item->quantity = $cart[$product->id]?->quantity ?? 1;
-                    $item->product_id = $product->id;
-                    $item->order_id = $order->id;
 
-                    $item->save();
+
+                    Item::create([
+                        'price' => $product->price,
+                        'quantity' => $cart[$product->id]?->quantity ?? 1,
+                        'product_id' => $product->id,
+                        'order_id' => $order->id,
+                    ]);
                 }
             });
 
@@ -114,9 +114,10 @@ class CheckoutController extends Controller
             }
 
             if ($order->status === 'unpaid') {
-                $order->status = 'paid';
-                $order->paid_at = Carbon::now();
-                $order->save();
+                $order->update([
+                    'status' => 'paid',
+                    'paid_at' => Carbon::now(),
+                ]);
             }
             return new OrderResource($order);
         } catch (\Throwable $th) {
