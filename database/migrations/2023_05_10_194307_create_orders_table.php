@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->float('total');
+            $table->enum('status', ['paid', 'unpaid']);
+            $table->float('total_price');
+            $table->string('checkout_session_id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DiscountResource extends JsonResource
+class ItemResource extends JsonResource
 {
     static $wrap = null;
     /**
@@ -17,11 +17,9 @@ class DiscountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'start' => $this->discount_start,
-            'end' => $this->discount_end,
-            'percentage' => $this->percentage,
-            'price' => $this->getPrice(),
-            'product' => $this->whenLoaded('product', $this->product)
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'product' => new ProductResource($this->product),
         ];
     }
 }

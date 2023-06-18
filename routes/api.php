@@ -13,6 +13,7 @@ Route::prefix("v1")->group(function () {
     require __DIR__ . '/api/v1/client/profile.php';
     require __DIR__ . '/api/v1/client/products.php';
     require __DIR__ . '/api/v1/client/categories.php';
+    require __DIR__ . '/api/v1/client/checkout.php';
 
     // admin routes
     Route::middleware([

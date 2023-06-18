@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DiscountResource extends JsonResource
+class OrderResource extends JsonResource
 {
     static $wrap = null;
     /**
@@ -17,11 +17,10 @@ class DiscountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'start' => $this->discount_start,
-            'end' => $this->discount_end,
-            'percentage' => $this->percentage,
-            'price' => $this->getPrice(),
-            'product' => $this->whenLoaded('product', $this->product)
+            'status' => $this->status,
+            'totalPrice' => $this->total_price,
+            'customer' => new UserResource($this->customer),
+            'items' => new ItemCollection($this->items),
         ];
     }
 }
