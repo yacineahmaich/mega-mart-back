@@ -16,6 +16,11 @@ class Discount extends Model
         'percentage',
     ];
 
+    public function getPrice()
+    {
+        return number_format($this->product->price - ($this->product->price * $this->attributes['percentage'] / 100), 2);
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);

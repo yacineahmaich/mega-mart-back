@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,8 +30,26 @@ class Product extends Model
             return $sum + $review['rating'];
         }, 0) / count($reviews);
 
-        return $avg_rating;
+        return number_format($avg_rating, 1);
     }
+
+    public function getDiscountPrice()
+    {
+        $price = number_format($this->attributes['price'] - ($this->attributes['price'] * $this->discount->percentage / 100), 1);
+
+        return $price;
+    }
+
+    public function hasDiscout(): bool
+    {
+        return $this->discount !== null && $this->discount->discount_start < Carbon::now();
+    }
+
+    public function getPriceAttribute()
+    {
+        return $this->hasDiscout() ? $this->getDiscountPrice() : $this->attributes['price'];
+    }
+
 
     protected $fillable = [
         'name',
