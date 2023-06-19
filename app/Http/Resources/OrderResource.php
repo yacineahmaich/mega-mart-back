@@ -16,6 +16,7 @@ class OrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         // $delivred_at = $this->delivered_at;
+        $itemsLoaded = $this->resource->relationLoaded('items');
         return [
             'id' => $this->id,
             'status' => $this->status,
