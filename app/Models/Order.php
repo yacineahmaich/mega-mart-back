@@ -19,6 +19,7 @@ class Order extends Model
         'status',
         'total_price',
         'checkout_session_id',
+        'checkout_url',
         'name',
         'email',
         'phone',
@@ -27,7 +28,7 @@ class Order extends Model
         'user_id',
         'delivered',
         'delivered_at',
-        'paid_at'
+        'paid_at',
     ];
 
     public function items()
