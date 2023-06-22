@@ -34,7 +34,8 @@ class OrderResource extends JsonResource
             'paidAt' => $this->whenNotNull($this->paid_at?->format('Y-m-d H:i:s')),
             'date' => $this->created_at->format('Y-m-d'),
             'items' => new ItemCollection($this->items),
-            'session' => $this->checkout_session_id
+            'session' => $this->checkout_session_id,
+            'checkoutUrl' => $this->checkout_url
         ];
     }
 }
