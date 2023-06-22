@@ -9,4 +9,6 @@ Route::middleware(['auth:sanctum'])
     Route::post('/profile/edit', [AccountController::class, 'updateProfile']);
 
     Route::get('/profile', [AccountController::class, 'getProfile']);
+
+    Route::post('/profile/avatar', [AccountController::class, 'setAvatar'])->middleware(['auth:sanctum']);
   });
