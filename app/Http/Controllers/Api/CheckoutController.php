@@ -33,8 +33,9 @@ class CheckoutController extends Controller
             $total_price = 0;
             foreach ($products as $product) {
                 $image = $product->images[0]->url;
+                $price = $product->hasDiscount() ? $product->getDiscountPrice() : $product->price;
 
-                $total_price += $product->price;
+                $total_price += $price;
 
                 $line_items[] = [
                     'price_data' => [
@@ -43,7 +44,7 @@ class CheckoutController extends Controller
                             'name' => $product->name,
                             'images' => [$image]
                         ],
-                        'unit_amount' => $product->price * 100,
+                        'unit_amount' => $price * 100,
                     ],
                     'quantity' => $cart[$product->id]['quantity'],
                 ];
@@ -69,7 +70,8 @@ class CheckoutController extends Controller
                     'email' => $delivery['email'],
                     'name' => $delivery['name'],
                     'phone' => $delivery['phone'],
-                    'note' => $delivery['note']
+                    'note' => $delivery['note'],
+                    'checkout_url' => $session->url
                 ]);
 
 
