@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReviewRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewCollection;
+use App\Http\Resources\ReviewResource;
 use App\Models\Category;
 use App\Models\MainCategory;
 use App\Models\Product;
@@ -71,6 +73,18 @@ class ProductController extends Controller
 
     public function getReviews($id)
     {
-        return new ReviewCollection(Review::where('product_id', $id)->get());
+        return new ReviewCollection(Review::where('product_id', $id)->latest()->paginate(6));
+    }
+
+    public function storeReview(StoreReviewRequest $request, $id)
+    {
+        $review = Review::create([
+            'rating' => $request->validated('rating'),
+            'comment' => $request->validated('comment'),
+            'user_id' => $request->user()->id,
+            'product_id' => $id
+        ]);
+
+        return new ReviewResource($review);
     }
 }

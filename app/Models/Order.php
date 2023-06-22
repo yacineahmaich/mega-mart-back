@@ -11,8 +11,8 @@ class Order extends Model
     use HasFactory, Uuids;
 
     protected $casts = [
-        'delivered_at' => 'datetime',
-        'paid_at' => 'datetime',
+        'delivered_at' => 'date',
+        'paid_at' => 'date',
     ];
 
     protected $fillable = [
@@ -25,7 +25,6 @@ class Order extends Model
         'shipping_address',
         'note',
         'user_id',
-        'status',
         'delivered',
         'delivered_at',
         'paid_at'
