@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -40,7 +41,37 @@ class AccountController extends Controller
         return new UserResource($request->user());
     }
 
-    public function updateProfileImage(Request $request)
+    public function setAvatar(Request $request)
     {
+        try {
+            $request->validate([
+                'image' => ['required', 'image']
+            ]);
+
+            $image = $request->file('image');
+            $user =  $request->user();
+
+            $imageName = time() . '_' . $image->getClientOriginalName();
+
+            $url = $image->store('images/users', 'public');
+
+
+
+            $user->avatar()->delete();
+            $user->avatar()->save(
+                Image::create([
+                    'name' => $imageName,
+                    'url' => url('storage/' . $url),
+                ])
+            );
+
+            return response()->json([
+                'success' => true
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false
+            ], 500);
+        }
     }
 }
