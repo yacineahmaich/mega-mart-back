@@ -31,10 +31,11 @@ class AdminDashboardController extends Controller
 
     public function sales()
     {
+        $days = 6;
         $sales = [];
 
         // Get the start and end dates for the last 7 days
-        $startDate = Carbon::now()->subDays(7);
+        $startDate = Carbon::now()->subDays($days);
         $endDate = Carbon::now();
 
         // Get the start and end dates for the corresponding days in the previous week
@@ -46,7 +47,7 @@ class AdminDashboardController extends Controller
                 ->sum('total_price');
 
             $previousDaySales = Order::where('status', 'paid')
-                ->whereDate('paid_at', $date->subDays(7))
+                ->whereDate('paid_at', $date->subDays($days))
                 ->sum('total_price');
 
             $sales[] = [
@@ -55,7 +56,7 @@ class AdminDashboardController extends Controller
                 "prev" => $previousDaySales,
             ];
 
-            $date->addDays(7);
+            $date->addDays($days);
         }
 
 
@@ -64,11 +65,8 @@ class AdminDashboardController extends Controller
 
     public function salesDistro()
     {
-        // get total sales
-        $totalSales = Order::where('status', 'paid')->sum('total_price');
-
         // get total sales by each main_category
-        $salesByCategory = Order::join('items', 'orders.id', '=', 'items.order_id')
+        $sales_contributions = Order::join('items', 'orders.id', '=', 'items.order_id')
             ->where('orders.status', 'paid')
             ->join('products', 'items.product_id', '=', 'products.id')
             ->join('categories', 'products.category_id', '=', 'categories.id')
@@ -78,17 +76,11 @@ class AdminDashboardController extends Controller
             ->get();
 
 
-        // add sales contribution percentage
-        $sales_contributions = [];
-        foreach ($salesByCategory as $item) {
-            $percentage = round((($item['total_sales'] / $totalSales) * 100), 1);
-
-            $sales_contributions[] = [
-                'name' => $item->name,
-                'totalSales' => $item->total_sales,
-                'percentage' => $percentage
-            ];
-        }
+        // transfer sales field to a number :> need fix
+        $sales_contributions = collect($sales_contributions)->map(fn ($item) =>  [
+            'name' => $item->name,
+            'sales' => +$item->total_sales,
+        ]);
 
         return response()->json($sales_contributions);
     }

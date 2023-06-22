@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+
         // GENERATE USERS
         User::create([
             'name' => 'yacine',
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('husahusa@'),
             'role' => 'admin'
         ]);
-        $users = User::factory(20)->create();
+        $users = User::factory(30)->create();
         collect($users)->each(function (User $user) {
             $user->avatar()->save(
                 Image::factory(1)->create([
@@ -83,5 +84,9 @@ class DatabaseSeeder extends Seeder
                 ])->first()
             );
         });
+
+        $this->call([
+            OrderSeeder::class
+        ]);
     }
 }
