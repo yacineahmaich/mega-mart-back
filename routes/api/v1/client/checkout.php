@@ -7,5 +7,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
   Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder']);
 
-  Route::get('/checkout/verify-paiment', [CheckoutController::class, 'verifyStatus']);
+  Route::get('/checkout/success', [CheckoutController::class, 'success']);
+
+  Route::post('/checkout/webhook', [CheckoutController::class, 'webhook'])->withoutMiddleware('auth:sanctum');
 });
