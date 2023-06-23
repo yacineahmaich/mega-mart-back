@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function myOrders(User $user)
     {
-        return new OrderCollection($user->orders);
+        return new OrderCollection($user->orders()->latest()->get());
     }
 
     public function show(Order $order)

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CheckoutController extends Controller
 {
@@ -35,7 +36,7 @@ class CheckoutController extends Controller
                 $image = $product->images[0]->url;
                 $price = $product->hasDiscount() ? $product->getDiscountPrice() : $product->price;
 
-                $total_price += $price;
+                $total_price += $price * $cart[$product->id]['quantity'];
 
                 $line_items[] = [
                     'price_data' => [
@@ -55,7 +56,7 @@ class CheckoutController extends Controller
                 'line_items' => $line_items,
                 'mode' => 'payment',
                 'success_url' => env('FRONTEND_BASE_URL') . '/cart/checkout/{CHECKOUT_SESSION_ID}',
-                'cancel_url' => env('FRONTEND_BASE_URL') . '/checkout',
+                'cancel_url' => env('FRONTEND_BASE_URL') . '/account/profile/my-orders',
             ]);
 
 
@@ -100,7 +101,7 @@ class CheckoutController extends Controller
     }
 
 
-    public function verifyStatus(Request $request)
+    public function success(Request $request)
     {
         Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
@@ -125,5 +126,51 @@ class CheckoutController extends Controller
         } catch (\Throwable $th) {
             return response('', 404);
         }
+    }
+
+    public function webhook()
+    {
+
+        // This is your Stripe CLI webhook secret for testing your endpoint locally.
+        $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
+
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload,
+                $sig_header,
+                $endpoint_secret
+            );
+        } catch (\UnexpectedValueException $e) {
+            // Invalid payload
+            return response('', 400);
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            return response('', 400);
+        }
+
+        // Handle the event
+        switch ($event->type) {
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+
+                $order = Order::where('checkout_session_id', $session->id)->first();
+
+                if ($order && $order->status === "unpaid") {
+                    $order->status = 'paid';
+                    $order->paid_at = Carbon::now();
+                    $order->save();
+                    // send notification email to customer
+                }
+
+
+            default:
+                echo 'Received unknown event type ' . $event->type;
+        }
+
+        return response('');
     }
 }
