@@ -45,11 +45,6 @@ class Product extends Model
         return $this->discount !== null && $this->discount->end > Carbon::now();
     }
 
-    // public function getPriceAttribute()
-    // {
-    //     return $this->hasDiscount() ? $this->getDiscountPrice() : $this->attributes['price'];
-    // }
-
 
     protected $fillable = [
         'name',

@@ -18,12 +18,9 @@ class ProductController extends Controller
 {
     protected $allowedPaginationLimits = [10, 15, 20];
 
-    public function index(Request $request)
+    public function categoryHotProducts(Category $category)
     {
-        $limit = $request->query('limit') ?? 10;
-        $limit = in_array($limit, $this->allowedPaginationLimits) ? $limit : 10;
-
-        return new ProductCollection(Product::filter()->sortItems()->paginate($limit));
+        return new ProductCollection($category->products()->take(12)->get());
     }
 
     public function byIds(Request $request)
@@ -37,19 +34,6 @@ class ProductController extends Controller
     {
         $limit = $request->query('limit') ?? 10;
         $limit = in_array($limit, $this->allowedPaginationLimits) ? $limit : 10;
-
-        $one_page = $request->query('one-page') ?? false;
-
-        if ($one_page) {
-            return new ProductCollection($category->products->take(12));
-        }
-
-        // Get products by ids
-        if ($request->has('productIds')) {
-            $ids = $request->query('productIds');
-            $ids = $ids ? explode(',', $ids) : [];
-            return new ProductCollection($category->products->whereIn($ids, 'id')->get());
-        }
 
         return new ProductCollection($category->products()->filter()->sortItems()->paginate($limit));
     }

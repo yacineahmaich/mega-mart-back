@@ -18,3 +18,7 @@ Route::get(
   '/categories/{category:slug}/products',
   [ProductController::class, 'categoryProducts']
 );
+Route::get(
+  '/categories/{category:slug}/hot-products',
+  [ProductController::class, 'categoryHotProducts']
+);
