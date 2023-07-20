@@ -56,7 +56,7 @@ class CheckoutController extends Controller
                 'line_items' => $line_items,
                 'mode' => 'payment',
                 'success_url' => env('FRONTEND_BASE_URL') . '/cart/checkout/{CHECKOUT_SESSION_ID}',
-                'cancel_url' => env('FRONTEND_BASE_URL') . '/account/profile/my-orders',
+                'cancel_url' => env('FRONTEND_BASE_URL') . '/account/profile/my-orders?cancel=1',
             ]);
 
 
