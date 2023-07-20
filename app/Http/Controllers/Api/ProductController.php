@@ -38,17 +38,6 @@ class ProductController extends Controller
         return new ProductCollection($category->products()->filter()->sortItems()->paginate($limit));
     }
 
-    public function mCategoryProducts(MainCategory $mainCategory)
-    {
-        $categoryIds = $mainCategory->categories->pluck('id')->toArray();
-        $products = Product::withCount('reviews')
-            ->whereIn('category_id', $categoryIds)
-            ->orderBy('reviews_count', 'desc')
-            ->paginate(12);
-
-        return new ProductCollection($products);
-    }
-
 
     public function show(Product $product)
     {
