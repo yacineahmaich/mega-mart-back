@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryCollection;
 use App\Models\Category;
 use App\Http\Resources\CategoryResource;
+use App\Models\MainCategory;
 
 class CategoryController extends Controller
 {
@@ -24,5 +25,4 @@ class CategoryController extends Controller
     {
         return new CategoryResource($category);
     }
-
 }

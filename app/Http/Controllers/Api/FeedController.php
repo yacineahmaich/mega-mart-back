@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\MainCategoryResource;
 use App\Http\Resources\OfferCollection;
 use App\Http\Resources\ProductCollection;
@@ -37,6 +38,30 @@ class FeedController extends Controller
         return [
             'offers' => $offers,
             'feed' => $feed,
+        ];
+    }
+
+
+    public function mainCategoryFeed(MainCategory $mainCategory)
+    {
+        $feed = [];
+        $categories = $mainCategory->categories;
+
+        foreach ($categories as $category) {
+            $products = Product::withCount('reviews')
+                ->where('category_id', $category->id)
+                ->orderBy('reviews_count', 'desc')
+                ->take(12)
+                ->get();
+            $feed[] = [
+                'category' => new CategoryResource($category),
+                'products' => new ProductCollection($products)
+            ];
+        }
+
+        return [
+            'mainCategory' => new MainCategoryResource($mainCategory),
+            'feed' => $feed
         ];
     }
 }
