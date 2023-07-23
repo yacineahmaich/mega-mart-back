@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('delivered')->default(false);
             $table->date('delivered_at')->nullable();
             $table->date('paid_at')->nullable();
-            $table->string('checkout_url');
+            $table->text('checkout_url');
         });
     }
 
