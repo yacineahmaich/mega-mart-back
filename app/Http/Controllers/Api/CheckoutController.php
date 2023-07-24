@@ -26,17 +26,19 @@ class CheckoutController extends Controller
 
 
             // 1) get cart products
-            $items_ids = array_keys($cart);
+            $items_ids = collect($cart)->each(fn ($item) => $item['id']);
             $products = Product::with('discount')->find($items_ids);
 
             // 2) create line items
             $line_items = [];
             $total_price = 0;
             foreach ($products as $product) {
+                $itemInCart = collect($cart)->firstWhere('id', '=', $product->id);
+
                 $image = $product->images[0]->url;
                 $price = $product->hasDiscount() ? $product->getDiscountPrice() : $product->price;
 
-                $total_price += $price * $cart[$product->id]['quantity'];
+                $total_price += $price * $itemInCart['quantity'];
 
                 $line_items[] = [
                     'price_data' => [
@@ -47,7 +49,7 @@ class CheckoutController extends Controller
                         ],
                         'unit_amount' => $price * 100,
                     ],
-                    'quantity' => $cart[$product->id]['quantity'],
+                    'quantity' => $itemInCart['quantity'],
                 ];
             }
 
@@ -79,11 +81,11 @@ class CheckoutController extends Controller
 
                 // 5) create order items
                 foreach ($products as $product) {
-
+                    $itemInCart = collect($cart)->firstWhere('id', '=', $product->id);
 
                     Item::create([
                         'price' => $product->price,
-                        'quantity' => $cart[$product->id]?->quantity ?? 1,
+                        'quantity' => $itemInCart['quantity'] ?? 1,
                         'product_id' => $product->id,
                         'order_id' => $order->id,
                     ]);
