@@ -26,14 +26,22 @@ class CheckoutController extends Controller
 
 
             // 1) get cart products
-            $items_ids = collect($cart)->each(fn ($item) => $item['id']);
+            $items_ids = array_map(fn ($item) => $item['id'], $cart);
             $products = Product::with('discount')->find($items_ids);
 
             // 2) create line items
             $line_items = [];
             $total_price = 0;
             foreach ($products as $product) {
-                $itemInCart = collect($cart)->firstWhere('id', '=', $product->id);
+
+                $tagetId = $product->id;
+                // $itemInCart = collect($cart)->firstWhere('id', '=', $product->id);
+                $filter_result = array_filter($cart, fn ($item) => $item['id'] === $tagetId);
+                $itemInCart = reset($filter_result);
+
+                if (!$itemInCart) {
+                    throw new NotFoundHttpException();
+                }
 
                 $image = $product->images[0]->url;
                 $price = $product->hasDiscount() ? $product->getDiscountPrice() : $product->price;

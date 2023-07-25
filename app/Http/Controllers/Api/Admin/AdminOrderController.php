@@ -12,7 +12,7 @@ class AdminOrderController extends Controller
 {
     public function index()
     {
-        return new OrderCollection(Order::paginate());
+        return new OrderCollection(Order::query()->orderBy('created_at', "desc")->paginate());
     }
     public function show(Order $order)
     {
