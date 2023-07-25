@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -39,5 +41,10 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public static function deleteUnpaidOrders($hours)
+    {
+        return Order::query()->where('status', 'unpaid')->where('created_at', '<', Carbon::now()->subHours($hours))->delete();
     }
 }
