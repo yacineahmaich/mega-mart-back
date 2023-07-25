@@ -70,8 +70,7 @@ class DatabaseSeeder extends Seeder
         }
         collect($products)->random(6)->each(function (Product $product) {
             Offer::create([
-                'offer_start' => now()->addMinutes(rand(1, 10)),
-                'offer_end' => now()->addDays(rand(1, 5)),
+                'end' => now()->addDays(rand(1, 20)),
                 'product_id' => $product->id
             ]);
         });

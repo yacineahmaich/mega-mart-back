@@ -19,8 +19,8 @@ class OfferResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'start' => $this->offer_start,
-            'end' => $this->offer_end,
+            'start' => $this->start,
+            'end' => $this->end,
             'backdrop' => new ImageResource($this->image),
             'product' => $this->whenLoaded('product', $this->product)
         ];

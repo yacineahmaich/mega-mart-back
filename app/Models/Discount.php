@@ -9,6 +9,11 @@ class Discount extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'start' => 'date',
+        'end' => 'date',
+    ];
+
     protected $fillable = [
         'end',
         'product_id',

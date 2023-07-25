@@ -9,9 +9,13 @@ class Offer extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'start' => 'date',
+        'end' => 'date',
+    ];
+
     protected $fillable = [
-        'offer_start',
-        'offer_end',
+        'end',
         'product_id'
     ];
 

@@ -14,8 +14,6 @@ class StoreOfferRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'offer_start' => $this->start,
-            'offer_end' => $this->end,
             'product_id' => $this->product
         ]);
     }
@@ -23,8 +21,7 @@ class StoreOfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'offer_start' => ["required", 'date', 'after_or_equal:now'],
-            'offer_end' => ["required", 'date', 'after_or_equal:start_date'],
+            'end' => ["required", 'date', 'after_or_equal:tomorrow'],
             'backdrop' => ["required", 'image'],
             'product_id' => ["required", 'exists:products,id']
         ];

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('offer_start');
-            $table->dateTime('offer_end');
+            $table->dateTime('start')->useCurrent();
+            $table->dateTime('end');
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
