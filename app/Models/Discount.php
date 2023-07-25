@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Discount extends Model
 {
@@ -28,5 +30,10 @@ class Discount extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public static function deleteOutdetedDiscounts()
+    {
+        return Discount::query()->where('end', '<=', Carbon::now())->delete();
     }
 }
