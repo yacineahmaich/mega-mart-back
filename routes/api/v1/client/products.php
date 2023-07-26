@@ -20,3 +20,8 @@ Route::get(
   '/categories/{category:slug}/hot-products',
   [ProductController::class, 'categoryHotProducts']
 );
+
+Route::get(
+  '/search',
+  [ProductController::class, 'search']
+);

@@ -13,6 +13,8 @@ use App\Models\MainCategory;
 use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends Controller
 {
@@ -59,5 +61,19 @@ class ProductController extends Controller
         ]);
 
         return new ReviewResource($review);
+    }
+
+
+    public function search(Request $request)
+    {
+        $query = $request->query('q');
+
+        if (!$query) {
+            return new ProductCollection([]);
+        }
+
+        $result = Product::query()->where('name', 'like', "%$query%")->withCount('reviews')->orderBy('reviews_count')->take(10)->get();
+
+        return new ProductCollection($result);
     }
 }
