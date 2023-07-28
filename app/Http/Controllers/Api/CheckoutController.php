@@ -123,16 +123,16 @@ class CheckoutController extends Controller
             $order = Order::where('checkout_session_id', $session->id)->first();
 
             if (!$order) {
-                return response('', 404);
+                throw new NotFoundHttpException('order not found!');
             }
 
-            if ($order->status === 'unpaid') {
-                $order->update([
-                    'status' => 'paid',
-                    'paid_at' => Carbon::now(),
-                ]);
-            }
-            return new OrderResource($order);
+
+            return response()->json([
+                'processed' => $order->status === 'paid',
+                'order' => new OrderResource($order)
+            ]);
+
+            // return new OrderResource($order);
         } catch (\Throwable $th) {
             return response('', 404);
         }
@@ -140,7 +140,6 @@ class CheckoutController extends Controller
 
     public function webhook()
     {
-
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
         $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
 
