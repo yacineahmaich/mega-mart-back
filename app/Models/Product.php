@@ -140,4 +140,16 @@ class Product extends Model
     {
         return $this->hasOne(Discount::class);
     }
+
+    public static function restoreProductsQuantity()
+    {
+        $soldoutProducts =  Product::query()->where('quantity', 0)->get();
+
+        foreach ($soldoutProducts as $product) {
+            $product->update(['quantity' => rand(1, 50)]);
+            $product->save();
+        }
+
+        return count($soldoutProducts);
+    }
 }

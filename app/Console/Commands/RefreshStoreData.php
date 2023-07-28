@@ -2,34 +2,35 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Discount;
+use App\Models\Order;
+use App\Models\Product;
+use Database\Seeders\OrderSeeder;
 use Illuminate\Console\Command;
 
-class DeleteOutDatedDiscounts extends Command
+class RefreshStoreData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'delete:outdated-discounts';
+    protected $signature = 'refresh-store-data';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Delete outdated discounts';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $count = Discount::deleteOutdetedDiscounts();
+        Product::restoreProductsQuantity();
 
-        $this->info("\"$count\" outdated discounts were deleted");
-
-        return Command::SUCCESS;
+        $orderSeeder = new OrderSeeder();
+        $orderSeeder->run();
     }
 }
