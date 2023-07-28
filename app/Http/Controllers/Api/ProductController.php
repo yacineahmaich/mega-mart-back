@@ -72,7 +72,7 @@ class ProductController extends Controller
             return new ProductCollection([]);
         }
 
-        $result = Product::query()->where('name', 'like', "%$query%")->withCount('reviews')->orderBy('reviews_count')->take(10)->get();
+        $result = Product::query()->where('name', 'like', "%$query%")->withCount('reviews')->orderBy('reviews_count')->take(4)->get();
 
         return new ProductCollection($result);
     }
