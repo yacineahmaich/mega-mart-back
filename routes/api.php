@@ -21,7 +21,7 @@ Route::prefix("v1")->group(function () {
 
     // admin routes
     Route::middleware([
-        // 'auth:sanctum', 'admin'
+        'auth:sanctum', 'admin', 'preventMutationsOnProd'
     ])
         ->prefix('admin')
         ->group(function () {
