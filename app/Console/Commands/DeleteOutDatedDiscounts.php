@@ -12,7 +12,7 @@ class DeleteOutDatedDiscounts extends Command
      *
      * @var string
      */
-    protected $signature = 'delete:outdated-discounts';
+    protected $signature = 'delete-outdated-discounts';
 
     /**
      * The console command description.

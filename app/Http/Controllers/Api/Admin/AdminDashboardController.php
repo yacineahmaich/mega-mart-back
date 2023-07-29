@@ -17,6 +17,7 @@ class AdminDashboardController extends Controller
         $orders = Order::count();
         $customers = User::where('role', 'customer')->count();
         $customers_with_multilpe_orders = User::has('orders', '>=', 2)
+            ->where('role', 'customer')
             ->count();
 
         $retention_rate = ($customers_with_multilpe_orders / $customers) * 100;

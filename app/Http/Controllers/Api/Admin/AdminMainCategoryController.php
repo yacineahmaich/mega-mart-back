@@ -8,7 +8,6 @@ use App\Http\Requests\Admin\UpdateMainCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\MainCategoryCollection;
 use App\Http\Resources\MainCategoryResource;
-use App\Models\Category;
 use App\Models\Image;
 use App\Models\MainCategory;
 use Illuminate\Http\Request;
@@ -19,13 +18,15 @@ class AdminMainCategoryController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(Request $request)
+  public function index()
   {
-    if ($request->has('page')) {
-      return new MainCategoryCollection(MainCategory::paginate());
-    } else {
-      return new MainCategoryCollection(MainCategory::all());
-    }
+    return new MainCategoryCollection(MainCategory::paginate());
+  }
+
+
+  public function all()
+  {
+    return new MainCategoryCollection(MainCategory::all());
   }
 
   /**

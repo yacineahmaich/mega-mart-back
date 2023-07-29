@@ -12,7 +12,7 @@ class DeleteUnpaidOrders extends Command
      *
      * @var string
      */
-    protected $signature = 'delete:unpaid-orders {hours=24}';
+    protected $signature = 'delete-unpaid-orders {hours=24}';
 
     /**
      * The console command description.

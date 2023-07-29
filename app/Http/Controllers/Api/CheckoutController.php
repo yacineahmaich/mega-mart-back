@@ -131,8 +131,6 @@ class CheckoutController extends Controller
                 'processed' => $order->status === 'paid',
                 'order' => new OrderResource($order)
             ]);
-
-            // return new OrderResource($order);
         } catch (\Throwable $th) {
             return response('', 404);
         }

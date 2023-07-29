@@ -107,13 +107,13 @@ class Product extends Model
             $query->where('price', '<=', request('max_price'));
         }
 
-        // if (request()->has('rating')) {
-        //     $query->with('images')
-        //         ->with('reviews')
-        //         ->join('reviews', 'products.id', '=', 'reviews.product_id')
-        //         ->groupBy('products.id')
-        //         ->havingRaw('CEIL(AVG(reviews.rating)) = ?', [request('rating')]);
-        // }
+        if (request()->has('rating')) {
+            $query->join('reviews', 'products.id', '=', 'reviews.product_id')
+                ->select('products.*')
+                ->selectRaw('ROUND(AVG(reviews.rating), 1) as avg_rating')
+                ->groupBy('products.id')
+                ->havingRaw('FLOOR(avg_rating) = ?', [request('rating')]);
+        }
     }
 
     public function category()

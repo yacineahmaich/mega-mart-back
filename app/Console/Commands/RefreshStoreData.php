@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Order;
 use App\Models\Product;
 use Database\Seeders\OrderSeeder;
 use Illuminate\Console\Command;

@@ -11,7 +11,6 @@ use App\Http\Resources\ReviewCollection;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Review;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminProductController extends Controller
