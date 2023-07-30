@@ -10,8 +10,9 @@ Route::prefix("v1")->group(function () {
     require __DIR__ . '/api/v1/auth.php';
 
     // client routes
-    Route::get('/feed', [FeedController::class, 'index']);
-    Route::get('/mc/{mainCategory:slug}/feed', [FeedController::class, 'mainCategoryFeed']);
+
+    require __DIR__ . '/api/v1/client/feed.php';
+    require __DIR__ . '/api/v1/client/offers.php';
     require __DIR__ . '/api/v1/client/main-categories.php';
     require __DIR__ . '/api/v1/client/profile.php';
     require __DIR__ . '/api/v1/client/products.php';

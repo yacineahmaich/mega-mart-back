@@ -16,8 +16,6 @@ class FeedController extends Controller
 {
     public function index()
     {
-        $offers = new OfferCollection(Offer::all());
-
         $main_categories = MainCategory::take(10)->get();
 
         $feed = [];
@@ -36,7 +34,6 @@ class FeedController extends Controller
         }
 
         return [
-            'offers' => $offers,
             'feed' => $feed,
         ];
     }
