@@ -9,6 +9,7 @@ use App\Models\Item;
 use App\Models\Order;
 use App\Models\Product;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
@@ -105,7 +106,7 @@ class CheckoutController extends Controller
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'checkout proccess failed! Please try again'
+                'message' => 'Something went wrong while proccesing! Please try again'
             ], 500);
         }
     }

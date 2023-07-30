@@ -15,8 +15,12 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        $customers = User::where('role', 'customer')->take(30)->get();
+        $customers = User::where('role', 'customer')->take(60)->get();
         $products = Product::all();
+
+        $customers->each(function ($customer) {
+            $customer->orders()->delete();
+        });
 
         foreach ($customers as $customer) {
 
