@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://mega-mart-store.netlify.app/'],
+    'allowed_origins' => [
+        // '*',
+        'https://mega-mart-store.netlify.app',
+        'http://localhost:5173',
+    ],
 
     'allowed_origins_patterns' => [],
 
