@@ -15,7 +15,7 @@ class PreventMutationsOnProduction
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (app()->environment() === 'production') {
+        if (app()->environment('production')) {
             if (
                 $request->isMethod('post') ||
                 $request->isMethod('put') ||
