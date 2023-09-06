@@ -19,6 +19,7 @@ class ReviewFactory extends Factory
         return [
             'rating' => $this->faker->numberBetween(0, 5),
             'comment' => $this->faker->paragraph(2),
+            'user_id' => 1
         ];
     }
 }

@@ -14,6 +14,8 @@ class MainCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $main_categories = MainCategory::factory(6)->hasImage(Image::factory())->create();
+        MainCategory::factory(6)
+            ->hasImage(Image::factory())
+            ->create();
     }
 }

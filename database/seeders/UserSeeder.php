@@ -14,17 +14,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(60)->create();
-        collect($users)->each(function (User $user) {
-            $user->avatar()->save(
-                Image::factory(1)->create([
-                    'imageable_type' => 'App\User',
-                    'imageable_id' => $user->id
-                ])->first()
-            );
-        });
+        User::factory(60)
+            ->hasAvatar(Image::factory())
+            ->create();
+        // collect($users)->each(function (User $user) {
+        //     $user->avatar()->save(
+        //         Image::factory(1)->create([
+        //             'imageable_type' => 'App\User',
+        //             'imageable_id' => $user->id
+        //         ])->first()
+        //     );
+        // });
 
-        // GENERATE USERS
+        // ADMIN
         User::create([
             'name' => 'demo',
             'email' => 'demo@gmail.com',

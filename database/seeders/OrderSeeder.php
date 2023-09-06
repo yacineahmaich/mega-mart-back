@@ -18,10 +18,6 @@ class OrderSeeder extends Seeder
         $customers = User::where('role', 'customer')->take(60)->get();
         $products = Product::all();
 
-        $customers->each(function ($customer) {
-            $customer->orders()->delete();
-        });
-
         foreach ($customers as $customer) {
 
             $orders = Order::factory(rand(0, 6))->create([
