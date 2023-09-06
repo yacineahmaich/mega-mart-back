@@ -3,75 +3,39 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateAvatarRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Image;
+use App\Services\AccountService;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
+    public function __construct(
+        protected AccountService $service
+    ) {
+    }
+
+
     public function getProfile(Request $request)
     {
-        $user = $request->user();
-
-        return response()->json([
-            "name" => $user->name,
-            "email" => $user->email,
-            "identifier" => $user->id,
-            "totalOrders" => $user->orders()->count(),
-            "spentedAmount" => $user->orders()->sum('total_price'),
-            "joinAt" => $user->created_at->format('Y/m/d')
-        ]);
+        return $this->service->getUserProfile($request);
     }
 
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $data = $request->validated();
 
-        if (isset($data['password'])) {
-            $request->user()->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => bcrypt($data['password'])
-            ]);
-        } else {
-            $request->user()->update($data);
-        }
+        $this->service->updateUserProfile($request);
 
         return new UserResource($request->user());
     }
 
-    public function setAvatar(Request $request)
+    public function setAvatar(UpdateAvatarRequest $request)
     {
-        try {
-            $request->validate([
-                'image' => ['required', 'image']
-            ]);
+        $this->service->changeUserAvatar($request);
 
-            $image = $request->file('image');
-            $user =  $request->user();
-
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            $url = $image->store('images/users', 'public');
-
-
-
-            $user->avatar()->delete();
-            $user->avatar()->save(
-                Image::create([
-                    'name' => $imageName,
-                    'url' => url('storage/' . $url),
-                ])
-            );
-
-            return response()->json([
-                'success' => true
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false
-            ], 500);
-        }
+        return response()->json([
+            'success' => true
+        ]);
     }
 }
