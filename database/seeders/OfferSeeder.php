@@ -14,6 +14,7 @@ class OfferSeeder extends Seeder
      */
     public function run(): void
     {
+        Offer::truncate();
 
         $products = Product::all()->random(6);
         $products->each(function (Product $product) {

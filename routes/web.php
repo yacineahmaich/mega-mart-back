@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Product;
+use Database\Seeders\OfferSeeder;
+use Database\Seeders\OrderSeeder;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/reset', function () {
+    Product::restoreProductsQuantity();
+
+    $offerSeeder = new OfferSeeder();
+    $offerSeeder->run();
+
+    $orderSeeder = new OrderSeeder();
+    $orderSeeder->run();
 });
