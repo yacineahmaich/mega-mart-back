@@ -17,14 +17,6 @@ class UserSeeder extends Seeder
         User::factory(60)
             ->hasAvatar(Image::factory())
             ->create();
-        // collect($users)->each(function (User $user) {
-        //     $user->avatar()->save(
-        //         Image::factory(1)->create([
-        //             'imageable_type' => 'App\User',
-        //             'imageable_id' => $user->id
-        //         ])->first()
-        //     );
-        // });
 
         // ADMIN
         User::create([

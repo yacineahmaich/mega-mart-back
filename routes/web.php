@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Offer;
+use App\Models\Order;
 use App\Models\Product;
 use Database\Seeders\OfferSeeder;
 use Database\Seeders\OrderSeeder;
@@ -23,9 +25,10 @@ Route::get('/', function () {
 Route::get('/reset', function () {
     Product::restoreProductsQuantity();
 
-    $offerSeeder = new OfferSeeder();
-    $offerSeeder->run();
+    Order::truncate();
 
     $orderSeeder = new OrderSeeder();
     $orderSeeder->run();
+
+    return 'SUCCESS';
 });

@@ -15,8 +15,6 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        Order::truncate();
-
         $customers = User::where('role', 'customer')->take(60)->get();
         $products = Product::all();
 
