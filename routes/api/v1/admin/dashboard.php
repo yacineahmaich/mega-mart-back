@@ -10,3 +10,5 @@ Route::get('/week-sales', [AdminDashboardController::class, 'sales']);
 Route::get('/sales-contribution', [AdminDashboardController::class, 'salesDistro']);
 
 Route::get('/latest-orders', [AdminDashboardController::class, 'latestOrders']);
+
+Route::get('/shared-stats', [AdminDashboardController::class, 'sharedStats'])->withoutMiddleware(['auth:sanctum', 'admin']);

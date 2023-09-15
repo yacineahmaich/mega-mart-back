@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderCollection;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -89,5 +90,21 @@ class AdminDashboardController extends Controller
     public function latestOrders()
     {
         return new OrderCollection(Order::latest()->take(6)->get());
+    }
+
+    public function sharedStats()
+    {
+
+        $total_sales = Order::where('status', 'paid')
+            ->sum('total_price');
+        $total_products = Product::count();
+        $total_orders = Order::count();
+
+
+        return response()->json([
+            'totalSales' => $total_sales,
+            'totalProducts' => $total_products,
+            'totalOrders' => $total_orders,
+        ]);
     }
 }
