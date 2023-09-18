@@ -21,7 +21,7 @@ class OrderFactory extends Factory
         $paid_at = $status === 'paid'
             ? fake()
             ->dateTimeBetween(
-                Carbon::now()->subWeek(),
+                Carbon::now()->subWeek()->subWeek(),
                 Carbon::now()->addWeek(),
             )
             : null;

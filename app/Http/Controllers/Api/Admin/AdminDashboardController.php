@@ -33,7 +33,7 @@ class AdminDashboardController extends Controller
 
     public function sales()
     {
-        $days = 6;
+        $days = 7;
         $sales = [];
 
         // Get the start and end dates for the last 7 days
