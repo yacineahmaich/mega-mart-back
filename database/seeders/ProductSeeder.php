@@ -31,7 +31,8 @@ class ProductSeeder extends Seeder
                 $product->images()->saveMany(
                     Image::factory(6)->create([
                         'imageable_type' => 'App\Product',
-                        'imageable_id' => $product->id
+                        'imageable_id' => $product->id,
+                        'url' => 'https://github.com/yacineahmaich/mega-mart-back/assets/122209403/af94f147-2a9d-4896-a33d-ae1902c0212e'
                     ])
                 );
                 $product->reviews()->saveMany(
