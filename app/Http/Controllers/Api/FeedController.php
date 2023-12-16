@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\MainCategoryResource;
-use App\Http\Resources\OfferCollection;
 use App\Http\Resources\ProductCollection;
 use App\Models\MainCategory;
-use App\Models\Offer;
 use App\Models\Product;
 
 

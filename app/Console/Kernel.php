@@ -14,7 +14,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('delete-unpaid-orders')->hourly();
         $schedule->command('delete-outdated-discounts')->hourly();
-        $schedule->command('delete-outdated-offers')->hourly();
 
         $schedule->command('refresh-store-data')->weekly();
     }

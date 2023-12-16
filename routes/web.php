@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Product;
-use Database\Seeders\OfferSeeder;
 use Database\Seeders\OrderSeeder;
 use Illuminate\Support\Facades\Route;
 

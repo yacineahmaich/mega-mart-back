@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Product;
-use Database\Seeders\OfferSeeder;
 use Database\Seeders\OrderSeeder;
 use Illuminate\Console\Command;
 
@@ -29,9 +28,6 @@ class RefreshStoreData extends Command
     public function handle()
     {
         Product::restoreProductsQuantity();
-
-        $offerSeeder = new OfferSeeder();
-        $offerSeeder->run();
 
         $orderSeeder = new OrderSeeder();
         $orderSeeder->run();

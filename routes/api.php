@@ -11,7 +11,6 @@ Route::prefix("v1")->group(function () {
     // client routes
 
     require __DIR__ . '/api/v1/client/feed.php';
-    require __DIR__ . '/api/v1/client/offers.php';
     require __DIR__ . '/api/v1/client/main-categories.php';
     require __DIR__ . '/api/v1/client/profile.php';
     require __DIR__ . '/api/v1/client/products.php';
@@ -29,7 +28,6 @@ Route::prefix("v1")->group(function () {
             require __DIR__ . '/api/v1/admin/main-categories.php';
             require __DIR__ . '/api/v1/admin/categories.php';
             require __DIR__ . '/api/v1/admin/customers.php';
-            require __DIR__ . '/api/v1/admin/offers.php';
             require __DIR__ . '/api/v1/admin/discounts.php';
             require __DIR__ . '/api/v1/admin/orders.php';
             require __DIR__ . '/api/v1/admin/dashboard.php';

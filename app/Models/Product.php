@@ -131,11 +131,6 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function offer()
-    {
-        return $this->hasOne(Offer::class);
-    }
-
     public function discount()
     {
         return $this->hasOne(Discount::class);
